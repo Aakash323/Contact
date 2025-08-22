@@ -10,8 +10,8 @@ export class Contact {
     @Column()
     username!:string;
 
-    @Column({nullable:true})
-    user_photo!:string;
+    @Column({type:'text',nullable:true})
+    user_photo:string | undefined;
 
     @Column({unique:true})
     user_email!:string;
