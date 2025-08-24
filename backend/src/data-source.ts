@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { Contact } from "./entity/contact.entity";
 import { User } from "./entity/user.entity";
 
+
 dotenv.config();
 
 export const AppDataSource= new DataSource({

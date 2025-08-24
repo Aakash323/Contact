@@ -1,6 +1,6 @@
 import express from "express"
 import { verifyUser } from "../middlewares/auth.middlware";
-import { addContact, deleteContact, getContactById, getContacts, updateContact } from "../controllers/contactController";
+import { addContact,getContacts,getContactById,updateContact,deleteContact } from "../controllers/contactController";
 import { upload } from "../middlewares/multer.middleware";
 
 export const contactRouter = express.Router();
