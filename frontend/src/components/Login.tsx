@@ -23,6 +23,9 @@ export default function Login() {
     if(res){
       alert("login sucessfull")
         navigate('/contact')
+        setTimeout(() => {
+      window.location.reload(); 
+    }, 50);
     }
   };
 

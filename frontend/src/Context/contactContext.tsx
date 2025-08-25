@@ -39,7 +39,7 @@ const contactContext = createContext<contactContextType>({
 export const ContactProvider = ({ children }: ContactProviderProps) => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   
     const fetchContacts = async () => {
@@ -74,7 +74,7 @@ export const ContactProvider = ({ children }: ContactProviderProps) => {
 
     useEffect(()=>{
       fetchContacts();
-    },[]);
+    },[token]);
 
   const addContact= async (data:FormData)=>{
     try{

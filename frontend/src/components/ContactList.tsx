@@ -1,22 +1,34 @@
 import type { Contact } from "../Context/contactContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ContactListProps {
   contacts: Contact[];
   selectedContactId: number | null;
   onSelectContact: (id: number | null) => void;
+  onSelectMultipleContacts: (ids: number[]) => void;
   searchQuery: string;
   filterType: string;
+  multipleDeleteTrigger: number;
 }
 
 const ContactList: React.FC<ContactListProps> = ({
   contacts,
   onSelectContact,
-  searchQuery,
+  onSelectMultipleContacts,
+  searchQuery,  
   filterType,
+  multipleDeleteTrigger,
 }) => {
   const [allSelected, setAllSelected] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<number[]>([]);
+  const [showAppreciation, setShowAppreciation] = useState(false);
+
+  useEffect(()=>{ 
+     if (multipleDeleteTrigger > 0) {
+      setShowAppreciation(true);
+      setTimeout(() => setShowAppreciation(false), 5000);
+    }
+  },[multipleDeleteTrigger])
 
   const filteredContacts = contacts.filter((contact) => {
     if (!contact) return false;
@@ -43,10 +55,12 @@ const ContactList: React.FC<ContactListProps> = ({
     if (allSelected) {
       setSelectedContacts([]);
       onSelectContact(null);
+      onSelectMultipleContacts([]);
     } else {
       const ids = filteredContacts.map((c) => c.id);
       setSelectedContacts(ids);
       onSelectContact(ids.length > 0 ? ids[0] : null); 
+      onSelectMultipleContacts(ids);
     }
     setAllSelected(!allSelected);
   };
@@ -61,10 +75,17 @@ const ContactList: React.FC<ContactListProps> = ({
     setSelectedContacts(newSelected);
     setAllSelected(newSelected.length === filteredContacts.length);
     onSelectContact(newSelected.length > 0 ? newSelected[0] : null);
+    onSelectMultipleContacts(newSelected)
   };
+
 
   return (
     <div className="p-4">
+     {showAppreciation && selectedContacts.length > 1 && (
+        <div className="text-green-600 font-semibold mb-4">
+          Awesome! You have successfully deleted {selectedContacts.length} contacts!
+        </div>
+      )}
       <div className="grid gap-6">
         <div className="p-2 border-b font-semibold text-gray-700 flex items-center gap-6 bg-gray-50">
           <input
@@ -136,5 +157,6 @@ const ContactList: React.FC<ContactListProps> = ({
     </div>
   );
 };
+
 
 export default ContactList;
