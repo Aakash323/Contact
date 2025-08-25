@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-// import { useNavigate } from "react-router";
 
 interface SignupFormData {
   username: string;
@@ -11,7 +10,7 @@ interface SignupFormData {
 
 export default function Signup() {
   const [error, setError] = useState("");
-//   const navigate = useNavigate();
+
   const [formData, setFormData] = useState<SignupFormData>({
     username: "",
     email: "",
@@ -65,7 +64,7 @@ export default function Signup() {
       );
       console.log(res.data);
       alert("User registered sucessfully")
-    //   navigate('/contact')
+    
     } catch (error) {
       console.error(error);
       setError("Signup failed.Please try again.");
