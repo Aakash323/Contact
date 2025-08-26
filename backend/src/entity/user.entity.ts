@@ -15,6 +15,9 @@ export class User {
   @Column()
   password!: string;
 
-  @OneToMany(() => Contact, (contact) => contact.user)
+  @OneToMany(() => Contact, (contact) => contact.user,{
+    cascade:true,
+    onDelete:"CASCADE"
+  })
   contacts!: Contact[];
 }
